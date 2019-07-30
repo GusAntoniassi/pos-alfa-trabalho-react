@@ -1,0 +1,16 @@
+.brand-name {
+    font-size: 30px;
+    font-weight: bold;
+    
+    .web { 
+        color: #3197e0;
+    }
+}
+
+.login-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+}
