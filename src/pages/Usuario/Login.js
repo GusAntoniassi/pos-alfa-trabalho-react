@@ -47,8 +47,8 @@ export default class Login extends Component {
         return (
             <Row className="login-wrapper">
                 <Col xs="12" className="text-center mb-3">
-                    <span class="brand-name">
-                        <span class="web">Web</span>Dev
+                    <span className="brand-name">
+                        <span className="web">Web</span>Dev
                     </span>
                 </Col>
                 <Col xs="12" sm={{ size: 6, offset: 3 }}>

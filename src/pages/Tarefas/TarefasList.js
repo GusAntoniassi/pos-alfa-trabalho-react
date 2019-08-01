@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Route } from "react-router-dom";
-import { Container, Table, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Container, Table, Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 
 import api from '../../services/api';
 import Header from '../../components/Header';
 
-export default class List extends Component {
+export default class TarefasList extends Component {
     state = {
         tasks: [],
         modal: false
@@ -24,14 +24,44 @@ export default class List extends Component {
                 this.setState({ tasks: response.data })
             })
             .catch(err => {
+                if (err.response && err.response.status !== 404) {
+                    window.alert('erro');
+                    console.warn(err);
+                }
+            })
+    }
+
+    handleExcluirTarefa = async tarefa => {
+        api.delete(`tarefas/${tarefa.id}`)
+            .then(response => {
+                console.log('response data', response.data);
+                let tasks = this.state.tasks;
+                tasks.splice(tasks.indexOf(tarefa), 1)
+                console.log(tasks);
+                this.setState({ tasks })
+            })
+            .catch(err => {
                 window.alert('erro');
                 console.warn(err);
             })
     }
 
+    handleConcluirTarefa = async tarefa => {
+        api.put(`tarefas/${tarefa.id}/concluida`)
+            .then(response => {
+                console.log('response data', response.data);
+
+                let tasks = this.state.tasks;
+                const idxTarefa = tasks.indexOf(tarefa);
+                tasks[idxTarefa].concluida = true;
+
+                this.setState({ tasks });
+            })
+    }
+
     renderTasks = () => {
         return this.state.tasks.map(task => (
-            <tr>
+            <tr key={task.id}>
                 <td>{task.id}</td>
                 <td>
                     <Link to={`/tarefas/${task.id}`} onClick={this.toggleModal}>
@@ -41,7 +71,14 @@ export default class List extends Component {
                 <td>{task.usuario.nome}</td>
                 <td>{task.concluida
                     ? <span className="btn btn-success" role="img" aria-label="Sim">✅</span>
-                    : <span className="btn btn-warning" role="img" aria-label="Não">❌</span>}</td>
+                    : <Button color="warning" onClick={() => this.handleConcluirTarefa(task)}>
+                        <span role="img" aria-label="Não">❌</span>
+                      </Button>}
+                    </td>
+                <td>
+                    <Button color="danger" onClick={() => this.handleExcluirTarefa(task)}>Excluir</Button>{' '}
+                    <Link to={`/tarefas/form/${task.id}`} className="btn btn-primary" color="primary">Editar</Link>
+                </td>
             </tr>
         ));
     }
@@ -75,7 +112,12 @@ export default class List extends Component {
             <>
                 <Header />
                 <Container>
-                    <h1 className="mb-3">Tarefas cadastradas</h1>
+                    <h1 className="mb-3">
+                        Tarefas cadastradas
+                        <div class="float-right">
+                            <Link to={`/tarefas/form`} className="btn btn-primary" color="success">Nova tarefa</Link>
+                        </div>
+                    </h1>
                     <Table>
                         <thead>
                             <tr>
@@ -83,6 +125,7 @@ export default class List extends Component {
                                 <th>Título</th>
                                 <th>Usuário</th>
                                 <th>Concluída</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>

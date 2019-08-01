@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { NavItem, NavLink } from "reactstrap";
 
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import * as auth from '../services/auth';
 
@@ -19,9 +19,7 @@ class LogoutButton extends Component {
 
         return (
             <NavItem>
-                <NavLink>
-                    <Link className="text-warning" onClick={this.onClickSair}>Sair</Link>
-                </NavLink>
+                <NavLink href="#" className="text-warning nav-link" onClick={this.onClickSair}>Sair</NavLink>
             </NavItem>    
         );
     }

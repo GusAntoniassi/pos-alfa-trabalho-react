@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
+import { Navbar, Nav, NavItem } from "reactstrap";
 
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import LogoutButton from "./LogoutButton";
 
@@ -10,21 +10,18 @@ export default class Header extends Component {
     render() {
         return (
             <Navbar color="dark" dark expand="xs" className="mb-4">
-                <NavbarBrand href="/">
-                    <Link className="text-white text-decoration-none" style={{ letterSpacing: '2px' }} to='/'>
-                        <span className="brand-name"><span class="web">Web</span>Dev</span>
-                    </Link>
-                </NavbarBrand>
+                <Link className="text-white text-decoration-none" style={{ letterSpacing: '2px' }} to='/'>
+                    <span className="brand-name"><span className="web">Web</span>Dev</span>
+                </Link>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
-                        <NavLink>
-                            <Link className="text-white" to='/tarefas'>Tarefas</Link>
-                        </NavLink>
+                        <NavLink className="text-white nav-link" to='/tarefas'>Tarefas</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink>
-                            <Link className="text-white" to='/about'>Sobre</Link>
-                        </NavLink>
+                        <NavLink className="text-white nav-link" to='/tarefas/form'>Nova tarefa</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className="text-white nav-link" to='/usuarios'>Usuários</NavLink>
                     </NavItem>
                     <LogoutButton />
                 </Nav>

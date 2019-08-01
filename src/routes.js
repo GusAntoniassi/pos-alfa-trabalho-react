@@ -5,8 +5,11 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from './services/auth';
 
 import Login from './pages/Usuario/Login';
-import { default as TarefasList } from './pages/Tarefas/List';
+import TarefasList from './pages/Tarefas/TarefasList';
+import UsuarioForm from './pages/Usuario/UsuarioForm';
 import NotFound from './pages/NotFound';
+import UsuarioList from './pages/Usuario/UsuarioList';
+import TarefasForm from './pages/Tarefas/TarefasForm';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -32,8 +35,11 @@ const Routes = () => (
                 )
             }}/>
             <Route path="/login" component={Login} />
-            <Route path="/cadastro" component={() => <h1>SignUp</h1>} />
+            <Route path="/cadastro" component={UsuarioForm} />
+            <PrivateRoute path="/tarefas/form/:taskId" component={TarefasForm} />
+            <PrivateRoute path="/tarefas/form" component={TarefasForm} />
             <PrivateRoute path="/tarefas" component={TarefasList} />
+            <PrivateRoute path="/usuarios" component={UsuarioList} />
             <Route path="*" component={NotFound} />
         </Switch>
     </BrowserRouter>
