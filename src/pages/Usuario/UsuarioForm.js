@@ -34,6 +34,10 @@ export default class UsuarioForm extends Component {
         } catch (err) {
             let errorMsg = 'Houve um problema ao gravar o usuário';
             
+            if (err.response.status && err.response.status === 409) {
+                errorMsg = 'Já existe um usuário cadastrado com este e-mail ou CPF';
+            }
+            
             this.setState({
                 error: errorMsg
             });
