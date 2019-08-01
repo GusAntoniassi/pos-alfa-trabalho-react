@@ -30,7 +30,10 @@ export default class Login extends Component {
             } catch (err) {
                 let errorMsg = 'Houve um problema com o login, verifique suas credenciais';
 
-                if (err.response.status) {
+                console.log(err.response.status);
+                if (err.response.status === 403) {
+                    errorMsg = 'Usuário inativo!';
+                } else if (err.response.status) {
                     errorMsg = 'Usuário e/ou senha inválidos!';
                 }
                 
