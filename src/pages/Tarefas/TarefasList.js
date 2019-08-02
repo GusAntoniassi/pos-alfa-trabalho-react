@@ -18,37 +18,52 @@ export default class TarefasList extends Component {
     }
 
     componentDidMount() {
+        document.body.classList.add('loading');
         api.get('tarefas')
             .then(response => {
                 console.log('response data', response.data);
-                this.setState({ tasks: response.data })
+                this.setState({ tasks: response.data });
+               document.body.classList.remove('loading');
             })
             .catch(err => {
                 if (err.response && err.response.status !== 404) {
                     window.alert('erro');
                     console.warn(err);
                 }
+                document.body.classList.remove('loading');
             })
     }
 
     handleExcluirTarefa = async tarefa => {
+        const excluir = window.confirm('Deseja realmente excluir esta tarefa?');
+
+        if (!excluir) {
+            return;
+        }
+
+        document.body.classList.add('loading');
         api.delete(`tarefas/${tarefa.id}`)
-            .then(response => {
-                console.log('response data', response.data);
-                let tasks = this.state.tasks;
-                tasks.splice(tasks.indexOf(tarefa), 1)
+        .then(response => {
+            console.log('response data', response.data);
+            let tasks = this.state.tasks;
+            tasks.splice(tasks.indexOf(tarefa), 1)
                 console.log(tasks);
                 this.setState({ tasks })
+                document.body.classList.remove('loading');
             })
             .catch(err => {
                 window.alert('erro');
                 console.warn(err);
+                document.body.classList.remove('loading');
             })
     }
 
     handleConcluirTarefa = async tarefa => {
+        document.body.classList.add('loading');
+
         api.put(`tarefas/${tarefa.id}/concluida`)
             .then(response => {
+
                 console.log('response data', response.data);
 
                 let tasks = this.state.tasks;
@@ -56,6 +71,12 @@ export default class TarefasList extends Component {
                 tasks[idxTarefa].concluida = true;
 
                 this.setState({ tasks });
+                document.body.classList.remove('loading');
+            })
+            .catch(err => {
+                window.alert('erro');
+                console.warn(err);
+                document.body.classList.remove('loading');
             })
     }
 
@@ -114,7 +135,7 @@ export default class TarefasList extends Component {
                 <Container>
                     <h1 className="mb-3">
                         Tarefas cadastradas
-                        <div class="float-right">
+                        <div className="float-right">
                             <Link to={`/tarefas/form`} className="btn btn-primary" color="success">Nova tarefa</Link>
                         </div>
                     </h1>

@@ -23,10 +23,13 @@ export default class Login extends Component {
         if (!email || !senha) {
             this.setState({ error: 'Preencha o e-mail e senha para logar!' });
         } else {
+            document.body.classList.add('loading');
+
             try {
                 const response = await api.post('usuarios/login', { email, senha });
                 login(response.data.token);
                 this.props.history.push('/');
+                document.body.classList.remove('loading');
             } catch (err) {
                 let errorMsg = 'Houve um problema com o login, verifique suas credenciais';
 
@@ -42,6 +45,7 @@ export default class Login extends Component {
                 });
 
                 console.error(err);
+                document.body.classList.remove('loading');
             }
         }
     }

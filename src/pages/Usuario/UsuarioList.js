@@ -16,18 +16,21 @@ export default class UsuarioList extends Component {
     }
 
     componentDidMount() {
+        document.body.classList.add('loading');
         api.get('usuarios')
             .then(response => {
                 console.log('response data', response.data);
                 this.setState({ usuarios: response.data })
+                document.body.classList.remove('loading');
             })
             .catch(err => {
                 window.alert('erro');
                 console.warn(err);
+                document.body.classList.remove('loading');
             })
     }
 
-    renderTasks = () => {
+    renderUsuarios = () => {
         return this.state.usuarios.map(usuario => (
             <tr key={usuario.id}>
                 <td>{usuario.id}</td>
@@ -61,7 +64,7 @@ export default class UsuarioList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.renderTasks()}
+                            {this.renderUsuarios()}
                         </tbody>
                     </Table>
 

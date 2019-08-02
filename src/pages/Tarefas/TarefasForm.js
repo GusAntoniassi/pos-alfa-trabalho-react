@@ -23,8 +23,10 @@ export default class TarefasForm extends Component {
             return;
         }
 
+        document.body.classList.add('loading');
         api.get(`tarefas/${idtarefa}`)
             .then(response => {
+                document.body.classList.remove('loading');
                 console.log('response data', response.data);
 
                 const { titulo, descricao, concluida } = response.data[0] || {};
@@ -38,6 +40,7 @@ export default class TarefasForm extends Component {
                     window.alert('erro');
                     console.warn(err);
                 }
+                document.body.classList.remove('loading');
             })
     }
 
@@ -54,6 +57,7 @@ export default class TarefasForm extends Component {
             }
         }
 
+        document.body.classList.add('loading');
         try {
             if (this.idtarefa) {
                 await api.put(`tarefas/${this.idtarefa}`, { titulo, descricao, concluida });
@@ -61,14 +65,16 @@ export default class TarefasForm extends Component {
                 await api.post('tarefas', { titulo, descricao, concluida });
             }
             this.props.history.push('/tarefas');
+            document.body.classList.remove('loading');
         } catch (err) {
             let errorMsg = 'Houve um problema ao gravar o usuário';
-
+            
             this.setState({
                 error: errorMsg
             });
 
             console.error(err);
+            document.body.classList.remove('loading');
         }
     }
 

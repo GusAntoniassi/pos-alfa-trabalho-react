@@ -28,9 +28,11 @@ export default class UsuarioForm extends Component {
             }
         }
 
+        document.body.classList.add('loading');
         try {
             await api.post('usuarios', { nome, email, nascimento, cpf, senha });
             this.props.history.push('/usuarios');
+            document.body.classList.remove('loading');
         } catch (err) {
             let errorMsg = 'Houve um problema ao gravar o usuário';
             
@@ -43,6 +45,7 @@ export default class UsuarioForm extends Component {
             });
 
             console.error(err);
+            document.body.classList.remove('loading');
         }
     }
 
