@@ -126,7 +126,7 @@ export default class UsuarioForm extends Component {
                                     onChange={e => this.setState({ email: e.target.value })}
                                 />
                             </FormGroup>
-                            <FormGroup className="col-12 col-sm-2">
+                            <FormGroup className={this.idusuario ? 'col-12 col-sm-2' : 'col-12 col-sm-4'}>
                                 <Label for="nascimento">Data de nascimento</Label>
                                 <Input 
                                     type="text" 
@@ -140,20 +140,22 @@ export default class UsuarioForm extends Component {
                                     onChange={e => this.setState({ nascimento: e.target.value })}
                                 />
                             </FormGroup>
-                            <FormGroup className="col-12 col-sm-2">
-                                <Label check>
-                                    <p><br/></p> {/* @TODO Alinhar melhor o checkbox de concluída */}
-                                    <Input type="hidden" name="status" value="0" />
-                                    <Input 
-                                        type="checkbox" 
-                                        name="status" 
-                                        value="1"
-                                        checked={this.state.status ? 1 : 0}
-                                        onChange={e => this.setState({ status: e.target.checked ? 1 : 0 })}
-                                    />{' '}
-                                    Ativo
-                                </Label>
-                            </FormGroup>
+                            {!this.idusuario ? '' : /* Campo status apenas na edição*/
+                                <FormGroup className="col-12 col-sm-2">
+                                    <Label check>
+                                        <p><br/></p> {/* @TODO Alinhar melhor o checkbox de concluída */}
+                                        <Input type="hidden" name="status" value="0" />
+                                        <Input 
+                                            type="checkbox" 
+                                            name="status" 
+                                            value="1"
+                                            checked={this.state.status ? 1 : 0}
+                                            onChange={e => this.setState({ status: e.target.checked ? 1 : 0 })}
+                                        />{' '}
+                                        Ativo
+                                    </Label>
+                                </FormGroup>
+                            }
                             
                             <FormGroup className="col-12 col-sm-4">
                                 <Label for="cpf">CPF</Label>
