@@ -103,7 +103,7 @@ export default class TarefasForm extends Component {
                             </FormGroup>
                             <FormGroup check className="col-12 col-sm-2">
                                 <Label check>
-                                    <p><br/></p> {/* @TODO Alinhar melhor o checkbox de concluída */}
+                                    <p><br/></p> {/* @TODO Alinhar de uma forma melhor o checkbox de concluída */}
                                     <Input type="hidden" name="concluida" value="false" />
                                     <Input 
                                         type="checkbox" 
@@ -126,7 +126,7 @@ export default class TarefasForm extends Component {
                                 />
                             </FormGroup>
                         </Row>
-                        <Button>Submit</Button>
+                        <Button>Enviar</Button>
                     </Form>
                 </Container>
             </>

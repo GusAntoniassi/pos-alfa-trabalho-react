@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { Container, Table, Badge } from "reactstrap";
 
 import api from '../../services/api';
@@ -41,6 +42,9 @@ export default class UsuarioList extends Component {
                 <td>{usuario.status
                     ? <Badge href="#" color="success">Ativo</Badge>
                     : <Badge href="#" color="secondary">Inativo</Badge>}</td>
+                <td>
+                    <Link to={`/usuarios/form/${usuario.id}`} className="btn btn-primary" color="primary">Editar</Link>
+                </td>
             </tr>
         ));
     }
@@ -61,6 +65,7 @@ export default class UsuarioList extends Component {
                                 <th>CPF</th>
                                 <th>Data de nascimento</th>
                                 <th>Status</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>

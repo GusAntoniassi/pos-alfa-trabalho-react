@@ -39,7 +39,8 @@ const Routes = () => (
             <PrivateRoute path="/tarefas/form/:taskId" component={TarefasForm} />
             <PrivateRoute path="/tarefas/form" component={TarefasForm} />
             <PrivateRoute path="/tarefas" component={TarefasList} />
-            <PrivateRoute path="/usuarios" component={UsuarioList} />
+            <PrivateRoute exact path="/usuarios" component={UsuarioList} />
+            <PrivateRoute path="/usuarios/form/:userId" component={UsuarioForm} />
             <Route path="*" component={NotFound} />
         </Switch>
     </BrowserRouter>
